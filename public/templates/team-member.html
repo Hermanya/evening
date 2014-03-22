@@ -6,7 +6,7 @@
       <h4>{{user.email && user.name || "Future "+ user.role}} <small ng-show="user.email">{{user.role}}</small></h4>
       <div ng-show="!user.email">
         <label>Share this link</label>
-        <input type="text" class="form-control" value="localhost:3000/invite/{{user._id}}" onclick="this.select();">
+        <input type="text" class="form-control" value="{{host}}/invite/{{user._id}}" onclick="this.select();">
       </div>
       <a href="mailto:{{user.email}}">{{user.email}}</a>
       <h5  ng-show="user.tasks.length>0"><span class="label label-info">Working on</span> {{user.tasks[0].title}}</h5>

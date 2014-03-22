@@ -2,6 +2,7 @@ var myApp = angular.module('hubohub',[]);
 
 myApp.controller('teamViewer', ['$scope','$http','$element', function($scope,$http,$element) {
 	$scope.users = [];
+	$scope.host = window.location.host;
 	$scope.getUsers = $http.get('/get/team')
 	.success(function(data, status, headers, config){
 		$scope.users = data;
