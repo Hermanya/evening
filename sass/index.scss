@@ -68,6 +68,7 @@ html{
 						h4{
 							@extend .media-heading;
 							padding:0 !important;
+							margin-top:0;
 							time{
 								@extend .pull-right;
 								@extend small;

@@ -5228,7 +5228,8 @@ html .container #main {
         width: 64px;
         max-height: 128px; }
       html .container #main section article h4 {
-        padding: 0 !important; }
+        padding: 0 !important;
+        margin-top: 0; }
       html .container #main section article main {
         padding-left: 5px;
         margin: 0 !important; }
