@@ -4979,19 +4979,25 @@ button.close {
 @media print {
   .hidden-print {
     display: none !important; } }
-.thumbnail .underlined {
-  border-bottom: dotted 1px black;
-  cursor: pointer;
-  white-space: nowrap !important; }
-.thumbnail .label {
-  border: none !important;
-  cursor: default !important; }
-.thumbnail img {
-  border: #ddd 1px solid; }
-.thumbnail form {
-  margin-top: 16px; }
-.thumbnail .default-pic {
-  padding: 24px; }
+.thumbnail {
+  -webkit-transform: translatez(1px);
+  -moz-transform: translatez(1px);
+  -ms-transform: translatez(1px);
+  -o-transform: translatez(1px);
+  transform: translatez(1px); }
+  .thumbnail .underlined {
+    border-bottom: dotted 1px black;
+    cursor: pointer;
+    white-space: nowrap !important; }
+  .thumbnail .label {
+    border: none !important;
+    cursor: default !important; }
+  .thumbnail img {
+    border: #ddd 1px solid; }
+  .thumbnail form {
+    margin-top: 16px; }
+  .thumbnail .default-pic {
+    padding: 24px; }
 
 .col-md-3, .row section {
   width: 24% !important; }

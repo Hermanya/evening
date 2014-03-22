@@ -1,5 +1,10 @@
 @import "bower_components/bootstrap-sass/vendor/assets/stylesheets/bootstrap/bootstrap";
 .thumbnail{
+	-webkit-transform: translatez(1px);
+    -moz-transform: translatez(1px);
+    -ms-transform: translatez(1px);
+    -o-transform: translatez(1px);
+    transform: translatez(1px);
 	.underlined{
 		border-bottom:dotted 1px black;
 		cursor:pointer;

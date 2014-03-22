@@ -71,3 +71,9 @@ exports.task = function(mongodb,db){
     });
   };
 };
+exports.currentTask = function(mongodb,db){
+  return function(req,res){
+    id = mongodb.ObjectID.createFromHexString(req.session.user._id);
+    db.collection('user').update({_id:id},{$set:{currentTask:}})
+  }
+}
