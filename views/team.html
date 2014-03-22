@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your team</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" type="text/css" href="stylesheets/team.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/common.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.49/jquery.form.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  <script src="/javascripts/ng-app-team.js"></script>
+</head>
+<body ng-app="hubohub">
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="/"><i class="fa fa-book">&nbsp;</i>Blog</a></li>
+          <li class="active"><a href="/team"><i class="fa fa-group">&nbsp;</i>Team</a></li>
+          <li><a href="#"><i class="fa fa-bar-chart-o">&nbsp;</i>Stats</a></li>
+          <li></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li ><a href="/logout"><i class="fa fa-sign-out">&nbsp;</i>Log out</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container" ng-controller="teamViewer">
+    <div class="row">
+        <section ng-repeat="user in users" ng-include="'/templates/team-member.html'"></section>
+        <section>
+          
+        <div class="user-card">
+          <div class="thumbnail">
+          <img class="userpic default-pic" src="http://icons.iconarchive.com/icons/visualpharm/icons8-metro-style/512/User-Role-Guest-icon.png">
+            <div class="caption">
+              <form role="form" id="new-user-form" action="/post/user" method="post">
+                <div class="form-group">
+                  <label>Role</label>
+                  <input type="text" class="form-control" name="role" placeholder="Superman" required/>
+                </div>
+                <div class="form-group">
+                  <label>Can invite?</label>
+                  <input type="checkbox" name="canInvite"/>
+                  <button class="btn btn-primary pull-right" type="button" ng-click="submitNewUser()">Create account</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        </section>
+      </div>
+    </div>
+  </body>
+  </html>

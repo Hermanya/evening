@@ -1,0 +1,42 @@
+<div class="user-card" ng-controller="userController">
+<div class="thumbnail">
+    <img ng-show="user.email" class="userpic" ng-src="/userpics/{{user.project_id}}/{{user._id}}">
+    <img ng-show="!user.email" class="userpic default-pic" ng-src="http://icons.iconarchive.com/icons/visualpharm/icons8-metro-style/512/User-Role-Guest-icon.png">
+    <div class="caption">
+      <h4>{{user.email && user.name || "Future "+ user.role}} <small ng-show="user.email">{{user.role}}</small></h4>
+      <div ng-show="!user.email">
+        <label>Share this link</label>
+        <input type="text" class="form-control" value="localhost:3000/invite/{{user._id}}" onclick="this.select();">
+      </div>
+      <a href="mailto:{{user.email}}">{{user.email}}</a>
+      <h5  ng-show="user.tasks.length>0"><span class="label label-info">Working on</span> {{user.tasks[0].title}}</h5>
+
+
+      <span class="underlined" ng-show="user.tasks.length>0" ng-click="areAllTasksShown = !areAllTasksShown">{{areAllTasksShown && "Hide" || "Show"}} other tasks</span>
+      <ul ng-show="areAllTasksShown">
+       <li  ng-repeat="task in user.tasks" ng-show="$index!=0">
+        <h6>
+         {{task.title}}
+       </h6>
+     </li>
+   </ul>
+   <span ng-click="isTaskFormShown = !isTaskFormShown" class="underlined">Assign new task</span>
+   <form role="form" action="/post/task" method="post" ng-show="isTaskFormShown" class="new-task-form">
+    <div class="form-group">
+      <label>Title</label>
+      <input required type="text" class="form-control" name="title" class="new-task-title" placeholder="Enter title">
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea class="form-control" name="description" class="new-task-description" placeholder="Enter full description" required></textarea>
+    </div>
+    <div class="form-group">
+      <label>Priority</label>
+      <input type="range" min="0" max="10" step="1" class="form-control" name="priority" />
+      <input type="hidden" name="assigning_to_id" value="{{user._id}}"/>
+    </div>
+    <button type="button" ng-click="submitNewTask()" class="btn btn-success">Assign</button>
+  </form>
+</div>
+</div>
+</div>

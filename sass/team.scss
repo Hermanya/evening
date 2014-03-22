@@ -1,0 +1,51 @@
+@import "bower_components/bootstrap-sass/vendor/assets/stylesheets/bootstrap/bootstrap";
+.thumbnail{
+	.underlined{
+		border-bottom:dotted 1px black;
+		cursor:pointer;
+		white-space: nowrap !important;
+	}
+	.label{
+		border:none !important;
+		cursor:default !important;
+	}
+	img{
+		border: #ddd 1px solid;
+	}
+	form{
+		margin-top:16px;
+	}
+	.default-pic{
+		padding:24px;
+	}
+
+}
+@media (max-width: 1200px) {
+	
+}
+
+.col-md-3{
+	width:24% !important;
+}
+.row{
+	  overflow-x:scroll;
+	  overflow-y:hidden;
+    white-space:nowrap;
+      transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg); /* Safari and Chrome */
+    padding-bottom:16px;
+	section{
+		  transform:rotateX(180deg);
+    -ms-transform:rotateX(180deg); /* IE 9 */
+    -webkit-transform:rotateX(180deg); /* Safari and Chrome */
+		display:inline-block;
+    vertical-align:bottom;
+    float:none;
+			@extend .col-sm-4;
+			@extend .col-md-3;
+			*{
+				white-space: initial;
+			}
+	}
+}

@@ -1,0 +1,41 @@
+<div class="modal fade" id="new-post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" ng-controller="posting-form">
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--h4 class="modal-title" id="myModalLabel">Compose new post</h4-->
+        <ul class="nav nav-tabs">
+          <li ng-class="{active: ! isPreviewSelected}" ng-click="selectEditor()"><a href="#">Write</a></li>
+          <li ng-class="{active: isPreviewSelected}" ng-click="selectPreview()"><a href="#">Preview</a></li>
+          <li><a href="http://daringfireball.net/projects/markdown/" target="_blank" id="markdown-hint" ><i class="fa fa-info-circle">&nbsp;</i>markdown</a></li>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </ul>
+
+      </div>
+      <div class="modal-body">
+                <form ng-show="! isPreviewSelected" role="form" action="post/post" class="body-form" method="POST" enctype="multipart/form-data">
+                  <textarea name="body" placeholder="Click here to begin"></textarea>
+                  <!--input type="file" class="btn btn-default btn-success"-->
+                </form>
+                <div id="post-preview" ng-show="isPreviewSelected" ng-bind-html-unsafe="processedContent"></div>
+      </div>
+      <div class="modal-footer">
+        <form role="form" action="post/attachment" class="attachment-form" method="post" enctype="multipart/form-data">
+                    <span class="btn btn-default btn-file ">
+                      <i class="fa fa-paperclip"></i> <input type="file" class="attachment-input" name="attachment" onchange="angular.element(this).scope().fileNameChanged()">
+                    </span>
+        </form>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-default btn-primary" ng-click="submitForm()" class="submit-button">Post</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--div class="form" ng-controller="posting-form">
+              <h4 class="form-toggle new-post-form-toggle" ng-click="toggleForm()"></h4>
+              <div class="expanded-form" ng-show="isExpanded">
+                <div>
+                  
+                </div>
+              </div>
+            </div-->

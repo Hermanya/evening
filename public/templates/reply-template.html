@@ -1,0 +1,30 @@
+<li class="media">
+	<a class="pull-left" href="#">
+		<img class="media-object" ng-src="/userpics/{{post.project_id}}/{{reply.author_id}}" alt="userpic">
+	</a>
+		<h5 class="media-heading"><strong>{{reply.author_name}}</strong> <small>{{reply.author_role}}</small><time title="{{post.fullDate}}">{{humanify(reply.timestamp)}}</time></h5>
+	<div class="media-body">
+		<p ng-bind-html-unsafe="htmlfy(reply.body)"></p>
+		<div class="form" ng-controller="posting-form">
+			<span class="form-toggle" ng-click="toggleForm()"><i class="fa fa-reply"></i> reply</span>
+			<div class="expanded-form" ng-show="isExpanded">
+				<form role="form" action="post/comment/{{post._id}}" class="body-form" method="POST" enctype="multipart/form-data">
+					<textarea name="body"></textarea>
+					<input type="hidden" name="path" value="{{path}}" />
+					<!--input type="file" class="btn btn-default btn-success"-->
+				</form>
+				<div>
+					<form role="form" action="post/attachment" class="attachment-form" method="post" enctype="multipart/form-data">
+						<span class="btn btn-default btn-file ">
+							<i class="fa fa-paperclip"></i> <input type="file" class="attachment-input" name="attachment" onchange="angular.element(this).scope().fileNameChanged()">
+						</span>
+					</form>
+					<button type="submit" class="btn btn-default btn-primary" ng-click="submitForm()" class="submit-button">Post</button>
+				</div>
+			</div>
+			<ul class="replies">
+				<li ng-repeat="reply in reply.replies" ng-include="'/javascripts/reply-template.html'"></li>
+			</ul>
+		</div>
+	</div>
+</li>

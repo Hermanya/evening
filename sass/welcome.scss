@@ -1,0 +1,34 @@
+@import "bower_components/bootstrap-sass/vendor/assets/stylesheets/bootstrap/bootstrap";
+
+body{
+	text-align:center;
+	.wrapper-outer{
+		display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+		.wrapper-midle{
+			 display: table-cell;
+    vertical-align: middle;
+			.wrapper-inner{
+				margin-left: auto;
+		    margin-right: auto; 
+		    width: 100%;
+				h1{
+
+				}
+				h2{
+
+				}
+				#register{
+					@extend .btn;
+					@extend .btn-success;
+				}
+				#login{
+					@extend .btn;
+					@extend .btn-default;
+				}
+			}
+		}
+	}
+}

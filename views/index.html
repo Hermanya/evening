@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog on hubohub</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" type="text/css" href="stylesheets/index.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/common.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="/javascripts/markdown.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.49/jquery.form.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+  <!--script type="text/ng-template"  id="reply-template.html" src="/javascripts/reply-template"-->
+  <script src="/javascripts/ng-app.js"></script>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body ng-app="hubohub">
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href=""><button class="btn btn-primary navbar-right" data-toggle="modal" data-target="#new-post-modal">
+  <i class="fa fa-pencil"></i> 
+</button></a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/"><i class="fa fa-book">&nbsp;</i>Blog</a></li>
+          <li><a href="/team"><i class="fa fa-group">&nbsp;</i>Team</a></li>
+          <li><a href="#"><i class="fa fa-bar-chart-o">&nbsp;</i>Stats</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li >
+            <form action="/logout" method="get" id="log-form">
+              <button type="submit" class="btn btn-default"><i class="fa fa-sign-out">&nbsp;</i>Log out</button>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div ng-include="'/templates/new-post-modal.html'"></div>
+    <div class="container">
+      <div class="row">
+        <div id="main">
+          <section ng-controller="postReaderController">
+            <h4>Posts</h4>
+            <article ng-repeat="post in posts">
+              <a>
+                <img ng-src="/userpics/{{post.project_id}}/{{post.author_id}}">
+              </a>
+                <h5><strong>{{post.author_name}}</strong> <small>{{post.author_role}}</small><time class="pull-right" title="{{post.fullDate}}">{{post.time}}</time></h5>
+              <main class="media-body">
+                <p ng-bind-html-unsafe="post.body"></p>
+                <div class="form" ng-controller="posting-form">
+                  <span class="form-toggle" ng-click="toggleForm()"><i class="fa fa-reply">&nbsp;</i>reply</span>
+                  <span class="form-toggle" ng-click="post.areRepliesShown = !post.areRepliesShown" ng-show="post.replies.length>0"><i class="fa fa-comments">&nbsp;</i>{{post.areRepliesShown && "hide" || "show "+(post.replies.length==1&&"one reply"||post.replies.length+" replies")}}</span>
+                  <div class="expanded-form" ng-show="isExpanded">
+                    <form role="form" action="post/comment/{{post._id}}" class="body-form" method="POST" enctype="multipart/form-data">
+                      <textarea name="body"></textarea>
+                      <input type="hidden" name="path" value="{{path}}" />
+                      <!--input type="file" class="btn btn-default btn-success"-->
+                    </form>
+                    <div>
+                      <form role="form" action="post/attachment" class="attachment-form" method="post" enctype="multipart/form-data">
+                        <span class="btn btn-default btn-file ">
+                          <i class="fa fa-paperclip"></i> <input type="file" class="attachment-input" name="attachment" onchange="angular.element(this).scope().fileNameChanged()">
+                        </span>
+                      </form>
+                      <button type="submit" class="btn btn-default btn-primary" ng-click="submitForm()" class="submit-button">Post</button>
+                    </div>
+                  </div>
+                  
+                  <ul class="replies" ng-show="post.areRepliesShown">
+                    <li ng-repeat="reply in post.replies" ng-include="'/templates/reply-template.html'"></li>
+                  </ul>
+                </div>
+              </main>
+            </article>
+          </section>
+        </div>  
+        <aside>
+        <div ng-controller="taskModuleController"  ng-show="tasks.length>0" id="tasks-panel">          
+          <h4>Tasks</h4>
+            <div id="accordion">
+            <div ng-repeat="task in tasks" ng-controller="taskController" ng-include="'/templates/task-template.html'"></div>
+            </div>
+          </div>
+        </aside>  
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="/javascripts/util.js"></script>
+        <script src="/javascripts/index.js"></script>
+        <script src="/javascripts/log-form.js"></script>
+        <script>
+
+        </script>
+      </body>
+      </html>

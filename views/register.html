@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap 101 Template</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"> 
+  <link rel="stylesheet" type="text/css" href="stylesheets/register.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/common.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Start your collective blog
+      <br><small>An easy yet powerfull way to collaboratively develop great products</small>
+    </h1>
+    <div class="row">
+      <div class="col-md-8">
+        <form role="form" action="post/project" id="form" method="POST" enctype="multipart/form-data">
+          <fieldset>
+            <legend>Project</legend>
+            <div class="form-group">
+              <label>Name</label>
+              <div>
+                <input type="text" name="project[name]"/>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>You</legend>
+            <div>
+              <label>Name</label>
+              <div>
+                <input type="text" name="user[name]"/>
+              </div>
+            </div>
+            <div>
+              <label>Email</label>
+              <div>
+                <input type="email" name="user[email]" placeholder="email@example.com"/>
+              </div>
+            </div>
+            <div>
+              <label>Password</label>
+              <div>
+                <input type="password" />
+              </div>
+            </div>
+            <div>
+              <label>Confirm password</label>
+              <div>
+                <input type="password" name="user[password]" />
+              </div>
+            </div>
+            <div>
+              <label>Picture</label>
+              <div>
+                <input type="file" name="photo"/>
+              </div>
+            </div>
+            <div>
+              <label>Role</label>
+              <div>
+                <input type="text" name="user[role]" value="founder"/>
+              </div>
+            </div>
+            <div>
+              <label></label>
+              <div>
+                <button type="submit" class="btn btn-default btn-primary">Register</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>  
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Next steps</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+              <li><em>Add initial content</em> <br>
+                <small>Describe your idea, so that everybody is clear</small>
+              </li>
+              <li><em>Invite contributors</em><br>
+                <small>The link to "team" page" will be on top</small></li>
+                <li><em>Assign tasks</em><br>
+                  <small>Add some initial tasks to each member</small></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>  
+      </div>  
+      <div id = "alert_placeholder"></div>
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.49/jquery.form.min.js"></script>
+      <script>
+        $( document ).ready(function() {
+          bootstrap_alert = function() {}
+          bootstrap_alert.warning = function(message) {
+            $('#alert_placeholder').html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><span>'+message+'</span></div>')
+          }
+    // this is the id of the form
+    $("#form").submit(function() {
+      $(this).ajaxSubmit({     
+        error: function(xhr) {
+          status('Error: ' + xhr.status);
+        },
+
+        success: function(response) {
+        //TODO: We will fill this in later
+        if (response === "ok"){
+          window.location.replace("/");
+        }else{
+          bootstrap_alert.warning(JSON.stringify(response));
+        }
+      }
+    });
+      return false;
+    });
+  });
+      </script>
+    </body>
+    </html>

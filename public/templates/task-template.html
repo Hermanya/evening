@@ -1,0 +1,23 @@
+<div>
+      <h5 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTask{{$index}}">
+          {{task.title}} 
+      </a>
+      </h5>
+    <div id="collapseTask{{$index}}" class="task-expanded panel-collapse collapse ">
+      <div class="panel-body">
+        <div class="form-group">
+        {{task.description}}
+        </div>
+      <div ng-show="! task.isCompleted">
+        <form action="/put/task/{{task._id}}" method="post" class="task-completion-form pull-left">
+          <button type="button" class="btn btn-success" ng-click="checkBox()" name="isCompleted" value="on">Done</button>
+        </form>
+        <form action="/put/taskAsCurrent/{{task._id}}" method="post" class="task-current-form pull-right">
+          <button type="button" class="btn btn-info" ng-click="setCurrent()">Set as current</button>
+        </form>
+        </div>
+      
+      </div>
+    </div>
+  </div>

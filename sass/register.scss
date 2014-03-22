@@ -1,0 +1,26 @@
+@import "bower_components/bootstrap-sass/vendor/assets/stylesheets/bootstrap/bootstrap";
+.container{
+	form{
+	@extend .form-horizontal;
+		fieldset{
+			div{
+				@extend .form-group;  
+					@extend .col-sm-6; 
+				label{
+					@extend .col-sm-4; 
+					@extend .control-label;
+				}
+				div{
+					@extend .col-sm-8;
+					input{
+						@extend .form-control;
+					}
+				}
+			}
+		}
+	}
+} 
+em{
+	@extend .text-info;
+	font-style:normal;
+}

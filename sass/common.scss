@@ -1,0 +1,113 @@
+/*@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}*/
+
+textarea,input{
+	border: 1px solid #bdc3c7 !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	outline:none !important;
+	font-size: 15px;
+line-height: 1.467;
+padding: 8px 12px;
+}
+textarea:focus,input:focus{
+
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(189, 195, 199, 0.6);
+	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(189, 195, 199, 0.6) !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	outline:none !important;
+	border-color:#48c9b0 !important;
+
+}
+.btn-primary{
+	color: #ffffff;
+	background-color: #1abc9c;
+	border-color:#1abc9c;
+}
+.btn-primary:hover,
+.btn-primary:focus{
+	color: #ffffff;
+	background-color: #48c9b0;
+	border-color: #48c9b0;
+}
+.navbar-brand{
+	padding: 8px 16px !important;
+}
+#new-post-modal{
+
+	.attachment-form{
+		display:inline-block;
+		float:left;
+	}
+	.modal-body{
+		padding:0 !important;
+	}
+	.modal-footer{
+		margin:0;
+	}
+	.modal-header{
+		border-bottom: none;
+		padding:0;
+	}
+	textarea,#post-preview{
+		border:none !important;
+		outline:none !important;
+		box-shadow:none !important;
+		-webkit-box-shadow:none !important;
+		width:100%;
+		max-width:100%;
+		margin:0;
+		padding:20px;
+		height:128px;
+	}
+}
+.nav > li > a {
+text-decoration: underline;
+}
+.nav-tabs{
+	padding:16px;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	li{
+		padding: 10px 15px;
+		background-color:white;
+		display:inline-block;
+	}
+	
+	.active{
+		border: 1px solid #dddddd;
+		border-bottom-color: transparent;
+		cursor: default;
+		border-radius: 2px;
+		a{
+			border:none !important;
+		}
+	}
+	#markdown-hint{
+		color:gray;
+		text-decoration: underline !important;
+		border:none !important;
+	}
+
+}
+
+.nav-tabs > li > a:hover{
+	background-color: initial !important;
+	border:none !important;
+}
+.nav-tabs > li > a{
+	padding:0;
+	margin-bottom: 0;
+	text-decoration: none !important;
+	cursor:pointer;
+	line-height:normal;
+	border:none !important;
+	border-bottom: dotted 1px black !important;
+}
+#log-form{
+		margin-top: 9px;
+	}

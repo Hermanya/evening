@@ -1,0 +1,19 @@
+@import "bower_components/bootstrap-sass/vendor/assets/stylesheets/bootstrap/bootstrap";
+h1{
+	text-align:center;
+}
+	form{
+		fieldset{
+			div{
+				@extend .form-group;  
+				label{
+					@extend .control-label;
+				}
+				div{
+					input{
+						@extend .form-control;
+					}
+				}
+			}
+		}
+	}
