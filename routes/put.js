@@ -17,30 +17,36 @@
     }
     var id = mongodb.ObjectID.createFromHexString(oldUser._id);
     delete oldUser._id;
-    db.collection('user').update({_id:id},{$set:oldUser}, function(err){
-      if(err){
-        res.send(err);
-        return;
-      }
-      oldUser._id = id;
-      req.session.user = oldUser;
-      if (req.files.photo){
-        var tempPath = req.files.photo.path,
-        targetPath = path.resolve("./public/userpics/"+oldUser.project_id+"/"+oldUser._id);
-        fileSystem.rename(tempPath, targetPath, function(err) {
-          if (err){
-            console.log(targetPath+" is not found");
-            throw err;
-          } 
-          else
+    db.collection('user').find({email:oldUser.email}).toArray(function(err,users){
+      if (! users.length){
+
+        db.collection('user').update({_id:id},{$set:oldUser}, function(err){
+          if(err){
+            res.send(err);
+            return;
+          }
+          oldUser._id = id;
+          req.session.user = oldUser;
+          if (req.files.photo){
+            var tempPath = req.files.photo.path,
+            targetPath = path.resolve("./public/userpics/"+oldUser.project_id+"/"+oldUser._id);
+            fileSystem.rename(tempPath, targetPath, function(err) {
+              if (err){
+                console.log(targetPath+" is not found");
+                throw err;
+              } 
+              else
+                res.send("ok");
+            });
+          }else{
             res.send("ok");
+          }
         });
       }else{
-        res.send("ok");
-      }
-    });
-
+        res.send("already registered");
+      }});
   };
+
 };
 exports.userpic = function(req,res){
 
@@ -48,7 +54,7 @@ exports.userpic = function(req,res){
 /*
  * COMPLETE tasks
  */
-exports.task = function(mongodb,db){
+ exports.task = function(mongodb,db){
   return function(req, res){
     //TODO check the values
 
@@ -61,19 +67,19 @@ exports.task = function(mongodb,db){
     completion = true;
     console.log(completion);
     db.collection('user').update({_id: userId, tasks:{ $elemMatch:{_id: taskId}}}, 
-    {$set:{"tasks.$.isCompleted":completion}},
-    function(err){
-      req.session.user.tasks.forEach(function(entry){
-        if(entry._id === req.params.id)
-          entry.isCompleted = true;
+      {$set:{"tasks.$.isCompleted":completion}},
+      function(err){
+        req.session.user.tasks.forEach(function(entry){
+          if(entry._id === req.params.id)
+            entry.isCompleted = true;
+        });
+        res.send( err === null ? "ok" : err);
       });
-      res.send( err === null ? "ok" : err);
-    });
   };
 };
 exports.currentTask = function(mongodb,db){
   return function(req,res){
     id = mongodb.ObjectID.createFromHexString(req.session.user._id);
  //   db.collection('user').update({_id:id},{$set:{currentTask:req.body.taskTitle}});
-  }
+}
 }

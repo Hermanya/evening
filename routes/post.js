@@ -61,11 +61,11 @@
     delete task.assigning_to_id;
 
     db.collection('user').update({_id:otherUserId}, 
-    {$push:{tasks:task}},
-    function(err,result){
-      req.session.user.tasks.push(task);
-      res.send( err === null ? task : err);
-    });
+      {$push:{tasks:task}},
+      function(err,result){
+        req.session.user.tasks.push(task);
+        res.send( err === null ? task : err);
+      });
     
   };
 };
@@ -92,25 +92,32 @@
         var salt = bcrypt.genSaltSync(10);
         user.hash = bcrypt.hashSync(user.password, salt);
         delete user.password;
-        db.collection('user').insert(user, function(err){
-          req.session.user = user;
-          fileSystem.mkdir(path.resolve("./uploads/"+project._id+"/"+user._id));
+        db.collection('user').find({email:user.email}).toArray(function(err,users){
+          if (! users.length){
 
-          if (req.files.photo == undefined){
-            res.send((err === null) ? "ok" : err);
-            return;
-          }
-          var tempPath = req.files.photo.path,
-          targetPath = path.resolve("./public/userpics/"+project._id+"/"+user._id);
-          fileSystem.rename(tempPath, targetPath, function(err) {
-            if (err){
-              console.log(targetPath+" is not found");
-              throw err;
-            } 
-            else
-              res.send(err === null ? "ok" : err);
-          });
-        });
+            db.collection('user').insert(user, function(err){
+              req.session.user = user;
+              fileSystem.mkdir(path.resolve("./uploads/"+project._id+"/"+user._id));
+
+              if (req.files.photo == undefined){
+                res.send((err === null) ? "ok" : err);
+                return;
+              }
+              var tempPath = req.files.photo.path,
+              targetPath = path.resolve("./public/userpics/"+project._id+"/"+user._id);
+              fileSystem.rename(tempPath, targetPath, function(err) {
+                if (err){
+                  console.log(targetPath+" is not found");
+                  throw err;
+                } 
+                else
+                  res.send(err === null ? "ok" : err);
+              });
+            });
+          }else{
+           res.send("already registered"); 
+         }
+       });
 
         
       } 
@@ -141,59 +148,59 @@
     db.collection('attachment').insert(record, function(err){
       if (err === null){
         var tempPath = attachment.path,
-          targetPath = path.resolve("./uploads/"+record.project_id+"/"+record.user_id+"/"+record.name);
-          fileSystem.rename(tempPath, targetPath, function(err) {
-            if (err){
-              res.send(err);
-              throw err;
-            }else{
-              res.send(record);
-            }
-          });
+        targetPath = path.resolve("./uploads/"+record.project_id+"/"+record.user_id+"/"+record.name);
+        fileSystem.rename(tempPath, targetPath, function(err) {
+          if (err){
+            res.send(err);
+            throw err;
+          }else{
+            res.send(record);
+          }
+        });
       }else{
         res.send(err);
       }
     });
-};
+  };
 };
 /*
  * COMMENT
  */
-exports.comment = function(mongodb,db){
-    return function(req,res){
-      var comment = req.body;
-      comment._id = new mongodb.ObjectID();
-      comment.timestamp = Date.now();
-      comment.author_id = req.session.user._id;
-      comment.author_name = req.session.user.name;
-      comment.replies = [];
+ exports.comment = function(mongodb,db){
+  return function(req,res){
+    var comment = req.body;
+    comment._id = new mongodb.ObjectID();
+    comment.timestamp = Date.now();
+    comment.author_id = req.session.user._id;
+    comment.author_name = req.session.user.name;
+    comment.replies = [];
 
-      var path = comment.path.split("/");
-      path.splice(0,1);
-      path.splice(-1,1);
-      var queryPath = "";
-      if (path.length!=0){
-        for (var i = 0; i < path.length; i++) {
-          queryPath += "replies."+path[i]+".";
-        };
-        queryPath+="replies";
-      }else{
-        queryPath = "replies";
-      }
-      delete comment.path;
-      var post_id = mongodb.ObjectID.createFromHexString(req.params.postId);
-      
-      var action = {};
-      action[queryPath] = comment;
-      db.collection('post')
-      .update({_id : post_id},
-        {$push:action}, 
-        function(err){
+    var path = comment.path.split("/");
+    path.splice(0,1);
+    path.splice(-1,1);
+    var queryPath = "";
+    if (path.length!=0){
+      for (var i = 0; i < path.length; i++) {
+        queryPath += "replies."+path[i]+".";
+      };
+      queryPath+="replies";
+    }else{
+      queryPath = "replies";
+    }
+    delete comment.path;
+    var post_id = mongodb.ObjectID.createFromHexString(req.params.postId);
+
+    var action = {};
+    action[queryPath] = comment;
+    db.collection('post')
+    .update({_id : post_id},
+      {$push:action}, 
+      function(err){
         if (err === null)
           res.send(comment);
         else
           res.send(error);
       });
-    }
+  }
 
 }
