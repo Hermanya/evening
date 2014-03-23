@@ -79,21 +79,22 @@
     var user = req.body.user,
     project = req.body.project;
 
-    db.collection('project').insert(project, function(err){
-      if (err !== null){
-        res.send(err);
-      }else{
-        fileSystem.mkdir(path.resolve("./uploads/"+project._id));
-        fileSystem.mkdir(path.resolve("./public/userpics/"+project._id));
+    db.collection('user').find({email:user.email}).toArray(function(err,users){
+      if (users.length == 0){
 
-        user.project_id = project._id.toString();
-        user.canInvite = true;
-        user.tasks = [];
-        var salt = bcrypt.genSaltSync(10);
-        user.hash = bcrypt.hashSync(user.password, salt);
-        delete user.password;
-        db.collection('user').find({email:user.email}).toArray(function(err,users){
-          if (! users.length){
+        db.collection('project').insert(project, function(err){
+          if (err !== null){
+            res.send(err);
+          }else{
+            fileSystem.mkdir(path.resolve("./uploads/"+project._id));
+            fileSystem.mkdir(path.resolve("./public/userpics/"+project._id));
+
+            user.project_id = project._id.toString();
+            user.canInvite = true;
+            user.tasks = [];
+            var salt = bcrypt.genSaltSync(10);
+            user.hash = bcrypt.hashSync(user.password, salt);
+            delete user.password;
 
             db.collection('user').insert(user, function(err){
               req.session.user = user;
@@ -114,18 +115,12 @@
                   res.send(err === null ? "ok" : err);
               });
             });
-          }else{
-           res.send("already registered"); 
-         }
-       });
-
-        
-      } 
-    });  
-
-
-
-
+          }
+        });
+}else{
+  res.send("already registered"); 
+}
+});
 };
 };
 /*

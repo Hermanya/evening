@@ -18,7 +18,7 @@
     var id = mongodb.ObjectID.createFromHexString(oldUser._id);
     delete oldUser._id;
     db.collection('user').find({email:oldUser.email}).toArray(function(err,users){
-      if (! users.length){
+      if (users.length == 0){
 
         db.collection('user').update({_id:id},{$set:oldUser}, function(err){
           if(err){
