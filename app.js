@@ -17,7 +17,7 @@
 
  var mongodb = require('mongodb');
 var mongoskin = require('mongoskin');
-var db = mongoskin.db("mongodb://hermanya:gsmOsg4Z@dbh42.mongolab.com:27427/hubohub", {native_parser:true});
+var db = mongoskin.db("mongodb://hermanya:password@dbh42.mongolab.com:27427/hubohub", {native_parser:true});
 /*var mongoClient = mongodb.MongoClient;
 mongoClient.connect("mongodb://localhost:27017/hubohub", function(err,db){
 	if(err) throw err;
