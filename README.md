@@ -15,6 +15,8 @@ They would need a place to share their ideas, progress reports and ask for help.
 
 ### Usage
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Hermanya/evening.svg)](https://greenkeeper.io/)
+
   1. So, they (in fact one of them) go to this site.
 ![Image](https://raw.github.com/Hermanya/evening/master/screenshots/Screenshot%20from%202014-03-19%2014:44:11.png)
   2. Register their team.
